@@ -16,7 +16,6 @@ module Gree
       end
 
       def instance_method_conflict?(sym)
-        binding.pry
         self.class.instance_methods(false).include?(sym.to_sym)
       end
 
