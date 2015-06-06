@@ -65,8 +65,7 @@ module Gree
         end
 
         def to_a
-          fetch unless fetched?
-          @instances
+          fetch
         end
         alias :force :to_a
         alias :inspect :to_a
@@ -86,10 +85,6 @@ module Gree
               Gree::Ec2Instance::Instance.new(ec2_instance)
             end
           end
-        end
-
-        def fetched?
-          !@instances.nil?
         end
       end
     end
