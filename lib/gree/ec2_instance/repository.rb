@@ -23,6 +23,10 @@ module Gree
         Relation.new(self).running
       end
 
+      def not_terminated
+        Relation.new(self).not_terminated
+      end
+
       def filters(filters)
         Relation.new(self).filters(filters)
       end
@@ -61,6 +65,12 @@ module Gree
 
         def running
           @filters << { name: 'instance-state-name', values: ['running'] }
+          self
+        end
+
+        def not_terminated
+          @filters << { name: 'instance-state-name', values: [
+                          'pending', 'running', 'shutting-down', 'stopping', 'stopped'] }
           self
         end
 
