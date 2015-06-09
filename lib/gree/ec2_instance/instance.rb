@@ -18,7 +18,7 @@ module Gree
 
         tags = format_ec2_tags(@ec2_instance.tags)
         define_custom_accessors_unless_conflict(tags)
-        @tags = Struct.new(*tags.keys)[*tags.values]
+        @tags = Struct.new(*tags.keys)[*tags.values] unless tags.empty?
       end
 
       def running?
@@ -26,17 +26,9 @@ module Gree
       end
 
       private
-      def underscore(str)
-        str.gsub(/::/, '/').
-          gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-          gsub(/([a-z\d])([A-Z])/,'\1_\2').
-          tr("-", "_").
-          downcase
-      end
-
       def format_ec2_tags(ec2_tags)
         ec2_tags.inject({ }) do |hash, tag|
-          hash.tap { |h| h[underscore(tag.key).to_sym] = tag.value }
+          hash.tap { |h| h[tag.key.to_sym] = tag.value }
         end
       end
 
