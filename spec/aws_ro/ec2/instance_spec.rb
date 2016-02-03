@@ -15,7 +15,7 @@ describe AwsRo::EC2::Instance do
   let(:ec2) { client.describe_instances.reservations.map(&:instances).flatten.first }
   let(:instance) { described_class.new(ec2) }
 
-  shared_examples_for "a delegator" do |methods|
+  shared_examples_for "a delegator of ec2" do |methods|
     methods.each do |method|
       it "delegtes :#{method} to @ec2_instance" do
         ec2_instance = instance.instance_variable_get(:@ec2_instance)
