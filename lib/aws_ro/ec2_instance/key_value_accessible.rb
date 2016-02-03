@@ -1,4 +1,4 @@
-module Gree
+module AwsRo
   module Ec2Instance
     module KeyValueAccessible
       private

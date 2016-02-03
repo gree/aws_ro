@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'gree/ec2_instance'
+require 'aws_ro/ec2_instance'
 
-describe Gree::Ec2Instance::Instance do
+describe AwsRo::Ec2Instance::Instance do
   before do
     data = {
       reservations:

@@ -1,6 +1,6 @@
-require 'gree/ec2_instance/key_value_accessible'
+require 'aws_ro/ec2_instance/key_value_accessible'
 
-module Gree
+module AwsRo
   module Ec2Instance
     class Instance
       extend Forwardable

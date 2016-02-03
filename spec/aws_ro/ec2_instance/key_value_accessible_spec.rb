@@ -1,9 +1,9 @@
 require 'spec_helper'
-require 'gree/ec2_instance/key_value_accessible'
+require 'aws_ro/ec2_instance/key_value_accessible'
 
-describe Gree::Ec2Instance::KeyValueAccessible do
+describe AwsRo::Ec2Instance::KeyValueAccessible do
   let(:klass) { Class.new {
-                  include Gree::Ec2Instance::KeyValueAccessible
+                  include AwsRo::Ec2Instance::KeyValueAccessible
                   def initialize(key_value)
                     define_custom_accessors_unless_conflict(key_value)
                   end

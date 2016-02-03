@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'gree/ec2_instance'
+require 'aws_ro/ec2_instance'
 
-describe Gree::Ec2Instance::Repository do
+describe AwsRo::Ec2Instance::Repository do
 end
