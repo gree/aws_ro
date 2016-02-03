@@ -1,4 +1,3 @@
-require "aws_ro/ec2_instance/version"
 require "aws_ro/ec2_instance/instance"
 require "aws_ro/ec2_instance/repository"
 
