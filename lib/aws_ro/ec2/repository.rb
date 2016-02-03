@@ -1,7 +1,7 @@
 require 'aws-sdk'
 
 module AwsRo
-  module Ec2Instance
+  module EC2
     class Repository
       def initialize(client_options)
         @client_options = client_options
@@ -92,7 +92,7 @@ module AwsRo
           _ids = @instance_ids.empty? ? nil : @instance_ids.uniq
           @instances = @klass.client.describe_instances(instance_ids: _ids, filters: _filter).inject([]) do |all, page|
             all += page.reservations.map(&:instances).flatten.map do |ec2_instance|
-              AwsRo::Ec2Instance::Instance.new(ec2_instance)
+              AwsRo::EC2::Instance.new(ec2_instance)
             end
           end
         end

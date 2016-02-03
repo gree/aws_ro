@@ -1,7 +1,7 @@
-require 'aws_ro/ec2_instance/key_value_accessible'
+require 'aws_ro/ec2/key_value_accessible'
 
 module AwsRo
-  module Ec2Instance
+  module EC2
     class Instance
       extend Forwardable
       def_delegators :@ec2_instance, :instance_id, :private_ip_address, :public_ip_address, :key_name, :state

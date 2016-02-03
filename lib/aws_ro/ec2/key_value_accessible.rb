@@ -1,5 +1,5 @@
 module AwsRo
-  module Ec2Instance
+  module EC2
     module KeyValueAccessible
       private
 

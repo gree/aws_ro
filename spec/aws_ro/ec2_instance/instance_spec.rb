@@ -1,7 +1,7 @@
 require 'spec_helper'
-require 'aws_ro/ec2_instance'
+require 'aws_ro/ec2'
 
-describe AwsRo::Ec2Instance::Instance do
+describe AwsRo::EC2::Instance do
   before do
     data = {
       reservations:
