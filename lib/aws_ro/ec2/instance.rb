@@ -15,10 +15,11 @@ module AwsRo
 
       def initialize(ec2_instance)
         @ec2_instance = ec2_instance
-
-        tags = format_ec2_tags(@ec2_instance.tags)
-        define_custom_accessors_unless_conflict(tags)
-        @tags = Struct.new(*tags.keys)[*tags.values] unless tags.empty?
+        if @ec2_instance.respond_to?(:tags)
+          tags = format_ec2_tags(@ec2_instance.tags)
+          define_custom_accessors_unless_conflict(tags)
+          @tags = Struct.new(*tags.keys)[*tags.values] unless tags.empty?
+        end
       end
 
       def running?

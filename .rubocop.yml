@@ -155,8 +155,8 @@ Style/StringLiterals:
 # Configuration parameters: EnforcedStyleForMultiline, SupportedStyles.
 # SupportedStyles: comma, consistent_comma, no_comma
 Style/TrailingCommaInLiteral:
-  Exclude:
-    - 'spec/aws_ro/ec2/key_value_accessible_spec.rb'
+  EnforcedStyleForMultiline: comma
+
 
 # Offense count: 1
 # Cop supports --auto-correct.
