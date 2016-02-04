@@ -5,7 +5,7 @@ describe AwsRo::EC2::Instance do
   before do
     data = {
       reservations:
-        [{ instances: [ { instance_id: 'a-11111', tags: tag_data } ]}] 
+        [{ instances: [{ instance_id: 'a-11111', tags: tag_data }] }]
     }
     Aws.config[:stub_responses] = true
     client.stub_responses(:describe_instances, data)
@@ -15,7 +15,7 @@ describe AwsRo::EC2::Instance do
   let(:ec2) { client.describe_instances.reservations.map(&:instances).flatten.first }
   let(:instance) { described_class.new(ec2) }
 
-  shared_examples_for "a delegator" do |methods|
+  shared_examples_for "a delegator of ec2" do |methods|
     methods.each do |method|
       it "delegtes :#{method} to @ec2_instance" do
         ec2_instance = instance.instance_variable_get(:@ec2_instance)
@@ -25,11 +25,11 @@ describe AwsRo::EC2::Instance do
     end
   end
 
-  it_behaves_like "a delegator", [:instance_id,
-                                  :private_ip_address,
-                                  :public_ip_address,
-                                  :key_name,
-                                  :state]
+  it_behaves_like "a delegator of ec2", [:instance_id,
+                                         :private_ip_address,
+                                         :public_ip_address,
+                                         :key_name,
+                                         :state]
 
   describe "#tags" do
     context "when ec2 has some tags" do

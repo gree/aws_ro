@@ -4,7 +4,7 @@ module AwsRo
       private
 
       def define_custom_accessors_unless_conflict(keys_values)
-        keys_values.each do |k,v|
+        keys_values.each do |k, v|
           key = underscore(k.to_s).to_sym
           unless instance_method_conflict?(key)
             define_reader_method(key, to_array_if_csv(v))
@@ -47,8 +47,8 @@ module AwsRo
 
       def underscore(str)
         str.gsub(/::/, '/').
-          gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-          gsub(/([a-z\d])([A-Z])/,'\1_\2').
+          gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+          gsub(/([a-z\d])([A-Z])/, '\1_\2').
           tr("-", "_").
           downcase
       end
