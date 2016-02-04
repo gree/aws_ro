@@ -16,7 +16,9 @@ module AwsRo
       end
 
       def instances
-        fail "Cannot use AwsRo::EC2::Repository" if ec2_repository.respond_to?(:instance_ids)
+        unless ec2_repository.respond_to?(:instance_ids)
+          fail "Cannot use AwsRo::EC2::Repository"
+        end
         @instances ||= ec2_repository.instance_ids(elb.instances.map(&:instance_id))
       end
 
