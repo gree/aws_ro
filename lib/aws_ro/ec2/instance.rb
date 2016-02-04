@@ -26,12 +26,12 @@ module AwsRo
       end
 
       private
+
       def format_ec2_tags(ec2_tags)
-        ec2_tags.inject({ }) do |hash, tag|
+        ec2_tags.inject({}) do |hash, tag|
           hash.tap { |h| h[tag.key.to_sym] = tag.value }
         end
       end
-
     end
   end
 end

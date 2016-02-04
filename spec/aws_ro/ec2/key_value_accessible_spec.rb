@@ -9,7 +9,7 @@ describe AwsRo::EC2::KeyValueAccessible do
                   end
                 } }
   let(:instance) { klass.new(key_value) }
-  let(:key_value) { {  } }
+  let(:key_value) { {} }
 
   context "when include the module" do
     it "responds to private method :define_custom_accessors_unless_conflict" do
@@ -56,7 +56,7 @@ describe AwsRo::EC2::KeyValueAccessible do
         end
       end
     end
-    let(:key_value) { { 'MyAttr' => 1 , 'my_attr' => 2 } }
+    let(:key_value) { { 'MyAttr' => 1, 'my_attr' => 2 } }
     it "does not add new accessor" do
       expect(instance.my_attr).to be 0 # original method called
     end

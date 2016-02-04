@@ -69,8 +69,8 @@ module AwsRo
         end
 
         def not_terminated
-          @filters << { name: 'instance-state-name', values: [
-                          'pending', 'running', 'shutting-down', 'stopping', 'stopped'] }
+          @filters << { name: 'instance-state-name',
+                        values: ['pending', 'running', 'shutting-down', 'stopping', 'stopped'] }
           self
         end
 
@@ -81,6 +81,7 @@ module AwsRo
         alias :inspect :to_a
 
         private
+
         def hash_to_tags_array(hash)
           hash.map do |k, v|
             { name: "tag:#{k}", values: Array(v) }
@@ -88,10 +89,11 @@ module AwsRo
         end
 
         def fetch
-          _filter = @filters.empty? ? nil : @filters.uniq
-          _ids = @instance_ids.empty? ? nil : @instance_ids.uniq
-          @instances = @klass.client.describe_instances(instance_ids: _ids, filters: _filter).inject([]) do |all, page|
-            all += page.reservations.map(&:instances).flatten.map do |ec2_instance|
+          filter_param = @filters.empty? ? nil : @filters.uniq
+          id_param = @instance_ids.empty? ? nil : @instance_ids.uniq
+          @instances = @klass.client.describe_instances(instance_ids: id_param,
+                                                        filters: filter_param).inject([]) do |all, page|
+            all + page.reservations.map(&:instances).flatten.map do |ec2_instance|
               AwsRo::EC2::Instance.new(ec2_instance)
             end
           end
