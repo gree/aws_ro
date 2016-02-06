@@ -7,7 +7,7 @@ module AwsRo
         keys_values.each do |k, v|
           key = underscore(k.to_s).to_sym
           unless instance_method_conflict?(key)
-            define_reader_method(key, to_array_if_csv(v))
+            define_reader_method(key, to_array_if_include_separator(v))
           end
 
           if like_a_boolean_value?(v) && (not instance_method_conflict?("#{key}?"))
@@ -36,10 +36,10 @@ module AwsRo
         end
       end
 
-      def to_array_if_csv(val)
+      def to_array_if_include_separator(val)
         return val unless val.is_a? String
-        if val.include?(',')
-          val.split(',').map(&:strip)
+        if val.include?(KeyValueAccessible.tag_separator)
+          val.split(KeyValueAccessible.tag_separator).map(&:strip)
         else
           val.strip
         end
@@ -51,6 +51,16 @@ module AwsRo
           gsub(/([a-z\d])([A-Z])/, '\1_\2').
           tr("-", "_").
           downcase
+      end
+
+      class << self
+        def tag_separator=(char)
+          @separator = char.to_s
+        end
+
+        def tag_separator
+          @separator ||= ' '
+        end
       end
     end
   end

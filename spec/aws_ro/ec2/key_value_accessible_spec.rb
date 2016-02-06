@@ -22,7 +22,7 @@ describe AwsRo::EC2::KeyValueAccessible do
       {
         'my_attr' => 1,
         'CapitalizedAttr' => 2,
-        'csv_attr' => 'foo, bar',
+        'whitespaced_attr' => 'foo bar',
         'boolean_attr' => 'True',
       }
     }
@@ -36,9 +36,9 @@ describe AwsRo::EC2::KeyValueAccessible do
         expect(instance.capitalized_attr).to be 2
       end
     end
-    context "with CSV string such as { 'csv_attr' => 'foo, bar' }" do
-      it "define #my_attr method and return an Array ['foo', 'bar']" do
-        expect(instance.csv_attr).to eq ['foo', 'bar']
+    context "with whitespaced string such as { 'whitespaced_attr' => 'foo bar' }" do
+      it "define #whitespaced_attr method and return an Array ['foo', 'bar']" do
+        expect(instance.whitespaced_attr).to eq ['foo', 'bar']
       end
     end
     context "with boolean string such as { 'boolean_attr' => 'True' }" do
