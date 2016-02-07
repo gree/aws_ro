@@ -5,16 +5,21 @@ require 'aws_ro/ec2/repository'
 module AwsRo
   module ElasticLoadBalancing
     class Repository
-      def initialize(client_options)
-        @client_options = client_options
-      end
+      attr_reader :client
 
-      def client
-        @client ||= Aws::ElasticLoadBalancing::Client.new(@client_options)
+      def initialize(client_or_options)
+        @client = if client_or_options.is_a? Aws::ElasticLoadBalancing::Client
+                    client_or_options
+                  else
+                    Aws::ElasticLoadBalancing::Client.new(client_or_options)
+                  end
       end
 
       def ec2_repository
-        @ec2_repository ||= AwsRo::EC2::Repository.new(@client_options)
+        @ec2_repository ||= AwsRo::EC2::Repository.new(
+          region: client.config.region,
+          credentials: client.config.credentials
+        )
       end
 
       def all
