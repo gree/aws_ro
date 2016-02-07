@@ -3,12 +3,14 @@ require 'aws-sdk'
 module AwsRo
   module EC2
     class Repository
-      def initialize(client_options)
-        @client_options = client_options
-      end
+      attr_reader :client
 
-      def client
-        @client ||= Aws::EC2::Client.new(@client_options)
+      def initialize(client_or_options = {})
+        @client = if client_or_options.is_a? Aws::EC2::Client
+                    client_or_options
+                  else
+                    Aws::EC2::Client.new(client_or_options)
+                  end
       end
 
       def all
