@@ -25,7 +25,9 @@ module AwsRo
       def all
         client.describe_load_balancers.each_with_object([]) do |page, arr|
           page.load_balancer_descriptions.each do |elb|
-            arr << LoadBalancer.new(elb, ec2_repository)
+            lb = LoadBalancer.new(elb, ec2_repository)
+            lb.store_instance_states(client.describe_instance_health(load_balancer_name: lb.name).instance_states)
+            arr << lb
           end
         end
       end
