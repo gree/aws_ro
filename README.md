@@ -1,6 +1,6 @@
 # AwsRo
 
-Wrpper class of AWS Resource objects to enable to access properties more easily, more ruby-likely.
+Wrapper class of AWS Resource objects to enable to access properties more easily, more ruby-likely.
 
 Now supported only `Aws::EC2` and `Aws::ElasticLoadBalancing`.
 
@@ -20,7 +20,7 @@ And then execute:
 
 <!--     $ gem install aws_ro -->
 
-## Perpose of this gem
+## Purpose of this gem
 
 Easy access to AWS Resources.
 
@@ -49,7 +49,7 @@ repo.tags({'MyEnv' => 'develop', 'MyTag' => '*'}).each |i|
 end
 ```
 
-This is simplified and keeping readablity.
+This is simplified and keeping readability.
 
 
 ## Usage
