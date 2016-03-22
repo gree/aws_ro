@@ -2,6 +2,8 @@
 
 Wrapper class of AWS Resource objects to enable to access properties more easily, more ruby-likely.
 
+The targets of this library are small and medium scale AWS systems.
+
 Now supported only `Aws::EC2` and `Aws::ElasticLoadBalancing`.
 
 ## Installation
@@ -167,7 +169,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/aws_ro/fork )
+1. Fork it ( https://github.com/gree/aws_ro/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

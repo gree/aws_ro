@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
 Wrpper library of AWS SDK objects to enable to access properties
  more easily, more ruby-likely.
   EOS
-  spec.homepage      = "tmp"
+  spec.homepage      = "https://github.com/gree/aws_ro"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
