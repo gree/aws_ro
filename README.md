@@ -32,7 +32,7 @@ By using plain AWS SDK v2:
 
 ```ruby
 client = Aws::EC2::Client.new(some_options)
-res = clinet.describe_instances(filters: [{name: 'tag:MyEnv', values: ['develop']}, {name: 'tag:MyTag', values: ['*']}])
+res = client.describe_instances(filters: [{name: 'tag:MyEnv', values: ['develop']}, {name: 'tag:MyTag', values: ['*']}])
 instances = res.reservations.flat_map(&:instances)
 instances.each do |i|
   v = i.tags.find { |t| t.key == 'MyTag' }.value
@@ -46,7 +46,7 @@ On the other hand, by using the `aws_ro` gem:
 
 ```ruby
 repo = AwsRo::EC2::Repository.new(some_options)
-repo.tags({'MyEnv' => 'develop', 'MyTag' => '*'}).each |i|
+repo.tags({'MyEnv' => 'develop', 'MyTag' => '*'}).each do |i|
   puts "ID: #{i.instance_id}, MyTag value: #{i.my_tag}"
 end
 ```
@@ -105,7 +105,7 @@ end
 # All query methods are chainable and return an `Array` like object.
 ## list security group of running-public-instances
 repo.running.filters([{name: 'ip-address', values: ['*'] }]).each do |i|
-  puts i.ec2.security_groups.map(&:group_name)}
+  puts i.ec2.security_groups.map(&:group_name)
 end
 
 ## list my 'InUse' tag instances
@@ -115,7 +115,7 @@ repo.not_terminated.tags('InUse' => '*').map(&:instance_id)
 
 #### class : `AwsRo::EC2::Instance`
 
-Instance is wrapper of EC2 instace object.
+`Instance` is wrapper of EC2 instace object.
 
 ```ruby
 ins = repo.all.first
@@ -143,7 +143,7 @@ ins.ec2
 
 ```ruby
 # Instance#tags returns `Struct` of tags.
-ins.tags.name
+ins.tags.Name
 # => 'Value of Name tag'
 ins.tags.roles
 # => 'staging, somerole'
@@ -163,7 +163,7 @@ ins.xyz_enabled?
 
 ## Development
 
-After checking out the repo`, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release` to create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
