@@ -1,3 +1,4 @@
+require 'forwardable'
 require 'aws_ro/ec2/key_value_accessible'
 
 module AwsRo
