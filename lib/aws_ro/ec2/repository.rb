@@ -94,6 +94,7 @@ module AwsRo
         end
         alias :force :to_a
         alias :inspect :to_a
+        alias :all :to_a
 
         private
 
