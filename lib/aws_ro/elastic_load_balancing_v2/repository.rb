@@ -1,7 +1,7 @@
 require 'aws-sdk'
 require 'aws_ro/elastic_load_balancing_v2/load_balancer'
 require 'aws_ro/ec2/repository'
-require 'pry'
+
 module AwsRo
   module ElasticLoadBalancingV2
     class Repository
