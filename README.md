@@ -4,7 +4,7 @@ Wrapper class of AWS Resource objects to enable to access properties more easily
 
 The targets of this library are small and medium scale AWS systems.
 
-Now supported only `Aws::EC2` and `Aws::ElasticLoadBalancing`.
+Now supported only `Aws::EC2`, `Aws::ElasticLoadBalancing` and `Aws::ElasticLoadBalancingV2`.
 
 ## Installation
 
@@ -63,6 +63,22 @@ repo = AwsRo::EC2::Repository.new(ec2_options)
 instances = repo.running.tags({'MyAttrName' => 'MyValue'})
 instances.each do |i|
   puts "#{i.name} #{i.public_ip_address}, #{i.my_attr_name}"
+end
+```
+
+```ruby
+puts "Print ALB rules and targets"
+options = { region: 'ap-northeast-1' }
+albs = AwsRo::ElasticLoadBalancingV2::Repository.new(options).all
+albs.each do |lb|
+  puts "LoadBalancer: #{lb.name}"
+  lb.listeners.each do |listener|
+    puts "- #{listener.protocol} (#{listener.port})"
+    listener.rules.each do |rule|
+      pattern = rule.default? ? '<blank>' : rule.path_pattern
+      puts "  - #{pattern} : #{rule.forward_target_group.name} (#{rule.priority})"
+    end
+  end
 end
 ```
 
