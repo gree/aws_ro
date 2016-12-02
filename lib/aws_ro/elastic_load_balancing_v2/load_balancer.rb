@@ -2,7 +2,7 @@ module AwsRo
   module ElasticLoadBalancingV2
     class LoadBalancer
       extend Forwardable
-      def_delegators :@load_balancer, :dns_name, :load_balancer_name, :load_balancer_arn, :vpc_id
+      def_delegators :@load_balancer, *Aws::ElasticLoadBalancingV2::Types::LoadBalancer.members
       attr_reader :client, :load_balancer
       alias alb load_balancer
       alias name load_balancer_name
@@ -22,7 +22,7 @@ module AwsRo
 
     class Listener
       extend Forwardable
-      def_delegators :@listener, :listener_arn, :port, :protocol
+      def_delegators :@listener, *Aws::ElasticLoadBalancingV2::Types::Listener.members
       attr_reader :client, :listener
       alias arn listener_arn
 
@@ -40,7 +40,7 @@ module AwsRo
 
     class Rule
       extend Forwardable
-      def_delegators :@rule, :rule_arn, :priority, :is_default
+      def_delegators :@rule, *Aws::ElasticLoadBalancingV2::Types::Rule.members
       attr_reader :client, :rule
       alias arn rule_arn
       alias default? is_default
@@ -62,8 +62,11 @@ module AwsRo
     end
 
     class TargetGroup
+      extend Forwardable
+      def_delegators :target_group, *Aws::ElasticLoadBalancingV2::Types::TargetGroup.members
       attr_reader :client, :target_group_arn
       alias arn target_group_arn
+      alias name target_group_name
 
       def initialize(arn, client)
         @target_group_arn = arn

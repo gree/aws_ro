@@ -39,11 +39,7 @@ describe AwsRo::ElasticLoadBalancingV2::LoadBalancer do
   subject { alb }
 
   it_behaves_like 'a delegator of the AWS resource object',
-                  [
-                    :dns_name,
-                    :load_balancer_name,
-                    :load_balancer_arn,
-                  ],
+                  Aws::ElasticLoadBalancingV2::Types::LoadBalancer.members,
                   :@load_balancer
 
   it_behaves_like 'a shorthand accessors',
@@ -76,11 +72,7 @@ describe AwsRo::ElasticLoadBalancingV2::Listener do
   subject { listener }
 
   it_behaves_like 'a delegator of the AWS resource object',
-                  [
-                    :listener_arn,
-                    :port,
-                    :protocol,
-                  ],
+                  Aws::ElasticLoadBalancingV2::Types::Listener.members,
                   :@listener
 
   describe "#rules" do
@@ -107,11 +99,7 @@ describe AwsRo::ElasticLoadBalancingV2::Rule do
   let(:rule) { described_class.new(aws_rule, client) }
   subject { rule }
   it_behaves_like 'a delegator of the AWS resource object',
-                  [
-                    :rule_arn,
-                    :priority,
-                    :is_default,
-                  ],
+                  Aws::ElasticLoadBalancingV2::Types::Rule.members,
                   :@rule
 
   it_behaves_like 'a shorthand accessors',
