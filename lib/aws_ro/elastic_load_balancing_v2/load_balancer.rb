@@ -2,7 +2,7 @@ module AwsRo
   module ElasticLoadBalancingV2
     class LoadBalancer
       extend Forwardable
-      def_delegators :@load_balancer, :load_balancer_name, :load_balancer_arn, :vpc_id
+      def_delegators :@load_balancer, :dns_name, :load_balancer_name, :load_balancer_arn, :vpc_id
       attr_reader :client, :load_balancer
       alias alb load_balancer
       alias name load_balancer_name
