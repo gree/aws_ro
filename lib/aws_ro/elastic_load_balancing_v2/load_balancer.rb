@@ -59,6 +59,11 @@ module AwsRo
         condition = rule.conditions.find { |cond| cond.field == 'path-pattern' }
         condition.values.first if condition
       end
+
+      def host_header
+        condition = rule.conditions.find { |cond| cond.field == 'host-header' }
+        condition.values.first if condition
+      end
     end
 
     class TargetGroup
