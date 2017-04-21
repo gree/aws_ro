@@ -87,7 +87,7 @@ module AwsRo
           region: client.config.region,
           credentials: client.config.credentials
         )
-        ec2_repository.instance_ids(health_descriptions.keys)
+        health_descriptions.empty? ? [] : ec2_repository.instance_ids(health_descriptions.keys)
       end
 
       private
