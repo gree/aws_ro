@@ -59,6 +59,11 @@ module AwsRo
         condition = rule.conditions.find { |cond| cond.field == 'path-pattern' }
         condition.values.first if condition
       end
+
+      def host_header
+        condition = rule.conditions.find { |cond| cond.field == 'host-header' }
+        condition.values.first if condition
+      end
     end
 
     class TargetGroup
@@ -87,7 +92,7 @@ module AwsRo
           region: client.config.region,
           credentials: client.config.credentials
         )
-        ec2_repository.instance_ids(health_descriptions.keys)
+        health_descriptions.empty? ? [] : ec2_repository.instance_ids(health_descriptions.keys)
       end
 
       private
