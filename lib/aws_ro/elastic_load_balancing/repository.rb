@@ -1,4 +1,4 @@
-require 'aws-sdk'
+require 'aws-sdk-elasticloadbalancing'
 require 'aws_ro/elastic_load_balancing/load_balancer'
 require 'aws_ro/ec2/repository'
 
