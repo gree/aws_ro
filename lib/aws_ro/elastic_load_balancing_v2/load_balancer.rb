@@ -98,7 +98,8 @@ module AwsRo
       private
 
       def health_descriptions
-        @health_descriptions ||= client.describe_target_health(target_group_arn: arn).target_health_descriptions.each_with_object({}) do |desc, h|
+        @health_descriptions ||= client.describe_target_health(target_group_arn: arn)
+                                       .target_health_descriptions.each_with_object({}) do |desc, h|
           h[desc.target.id] = desc
         end
       end
