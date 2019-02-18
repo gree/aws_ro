@@ -70,7 +70,7 @@ end
 puts "Print ALB rules and targets"
 options = { region: 'ap-northeast-1' }
 albs = AwsRo::ElasticLoadBalancingV2::Repository.new(options).all
-albs.each do |lb|
+albs.all.each do |lb|
   puts "LoadBalancer: #{lb.name}"
   lb.listeners.each do |listener|
     puts "- #{listener.protocol} (#{listener.port})"

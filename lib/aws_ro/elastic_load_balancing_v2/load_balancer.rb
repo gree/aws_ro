@@ -1,3 +1,5 @@
+require 'aws-sdk-elasticloadbalancingv2'
+
 module AwsRo
   module ElasticLoadBalancingV2
     class LoadBalancer
