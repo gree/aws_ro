@@ -74,6 +74,7 @@ module AwsRo
       attr_reader :client, :target_group_arn
       alias arn target_group_arn
       alias name target_group_name
+      alias type target_type
 
       def initialize(arn, client)
         @target_group_arn = arn
@@ -89,12 +90,32 @@ module AwsRo
         @target_group ||= client.describe_target_groups(target_group_arns: [arn]).target_groups.first
       end
 
+      def target_type
+        @target_type ||= target_group.target_type
+      end
+
       def instances(ec2_repository = nil)
+        return [] if health_descriptions.empty?
+
+        case type
+        when 'instance','ip'
+          ec2_instances(ec2_repository)
+        when 'lambda'
+          health_descriptions.values.map(&:target)
+        else
+          raise "Unsupported target-type: #{type}"
+        end
+      end
+
+      def ec2_instances(ec2_repository = nil)
         ec2_repository ||= AwsRo::EC2::Repository.new(
           region: client.config.region,
           credentials: client.config.credentials
         )
-        health_descriptions.empty? ? [] : ec2_repository.instance_ids(health_descriptions.keys)
+        case type
+        when 'instance' then ec2_repository.instance_ids(health_descriptions.keys)
+        when 'ip' then ec2_repository.filters([{ name: 'private-ip-address', values: health_descriptions.keys }])
+        end
       end
 
       private
