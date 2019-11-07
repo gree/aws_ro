@@ -114,7 +114,7 @@ module AwsRo
         )
         case type
         when 'instance' then ec2_repository.instance_ids(health_descriptions.keys)
-        when 'ip' then ec2_repository.filters([{ name: 'private-ip-address', values: health_descriptions.keys }])
+        when 'ip' then ec2_repository.filters([{ name: 'network-interface.addresses.private-ip-address', values: health_descriptions.keys }])
         end
       end
 
