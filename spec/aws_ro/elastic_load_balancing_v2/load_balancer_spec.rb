@@ -121,7 +121,12 @@ end
 
 describe AwsRo::ElasticLoadBalancingV2::TargetGroup do
   before do
-    data = {
+    Aws.config[:stub_responses] = true
+    client.stub_responses(:describe_target_health, data)
+  end
+
+  let(:data) {
+    {
       target_health_descriptions: [
         { target: { id: 'i-xxxxaaaa', port: 80 },
           target_health: { state: 'healthy' } },
@@ -129,10 +134,7 @@ describe AwsRo::ElasticLoadBalancingV2::TargetGroup do
           target_health: { state: 'unhealthy', reason: 'Target.FailedHealthChecks' } },
       ],
     }
-    Aws.config[:stub_responses] = true
-    client.stub_responses(:describe_target_health, data)
-  end
-
+  }
   let(:client) { Aws::ElasticLoadBalancingV2::Client.new }
   let(:arn) { "arn:aws:elasticloadbalancing:ap-northeast-1:555555666666:targetgroup/mytarget1/abcdef1234567890" }
   let(:target_group) { described_class.new(arn, client) }
@@ -149,6 +151,41 @@ describe AwsRo::ElasticLoadBalancingV2::TargetGroup do
     context "with instance_id" do
       it "returns health_descriptions of the instance" do
         expect(target_group.health('i-xxxxbbbb').target_health.state).to eq 'unhealthy'
+      end
+    end
+
+    context "with IP (target-type: ip)" do
+      let(:data) {
+        {
+          target_health_descriptions: [
+            { target: { id: '10.111.38.50', port: 80 },
+              target_health: { state: 'healthy' } },
+            { target: { id: '10.111.41.47', port: 80 },
+              target_health: { state: 'unhealthy', reason: 'Target.FailedHealthChecks' } },
+          ],
+        }
+      }
+      it "returns health_descriptions of the IPs" do
+        expect(target_group.health('10.111.38.50').target_health.state).to eq 'healthy'
+        expect(target_group.health('10.111.41.47').target_health.state).to eq 'unhealthy'
+      end
+
+    end
+
+    context "with lambda function (target-type: lambda)" do
+      let(:data) {
+        {
+          target_health_descriptions: [
+            { target: { id: 'arn:aws:lambda:us-east-1:123456789012:function:my-lambda', port: nil, availability_zone: 'all' },
+              target_health: { state: 'healthy' } },
+            { target: { id: 'arn:aws:lambda:ap-northeast-1:123456789012:function:my-function', port: nil, availability_zone: 'all' },
+              target_health: { state: 'unavailable' }, health_check_port: nil },
+          ],
+        }
+      }
+      it "returns health_descriptions of the lambdas" do
+        expect(target_group.health('arn:aws:lambda:us-east-1:123456789012:function:my-lambda').target_health.state).to eq 'healthy'
+        expect(target_group.health('arn:aws:lambda:ap-northeast-1:123456789012:function:my-function').target_health.state).to eq 'unavailable'
       end
     end
 
